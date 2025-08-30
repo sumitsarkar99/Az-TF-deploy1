@@ -1,5 +1,5 @@
 # Az-TF-deploy1
-                  # Content 🫙
+## Content 🫙
 ## 🚀 breif
 ## 📜 The script I faced issue on vscode without jq installed
 ## ⚡ The Problem  
@@ -80,7 +80,7 @@ unrecognized arguments:
 
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-**## 🔍 The Investigation**
+🔍 The Investigation
 
 Tried sudo apt install jq → Blocked due to sudo restrictions in WSL.
 
@@ -91,7 +91,7 @@ Realized I could remove jq entirely and still extract required values directly f
 
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-**## ✅ The Solution**
+✅ The Solution
 
 Rewrote the script without jq.
 
@@ -112,7 +112,7 @@ Working script: setup-terraform-sp.sh ---->> check the entire code on the "setup
 
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-**## 🛠️ Usage**
+🛠️ Usage
 # Login to Azure
 az login
 
