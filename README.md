@@ -1,40 +1,37 @@
 # Az-TF-deploy1
-# 🚀 Azure Service Principal Setup for Terraform (with Troubleshooting Story)
+                  # Content 🫙
+## 🚀 breif
+## 📜 The script I faced issue on vscode without jq installed
+## ⚡ The Problem  
+## 🔍 The Investigation
+## ✅ The Solution
+## 🛠️ Usage
+========================= 
+
+## 🚀 Azure Service Principal Setup for Terraform (with Troubleshooting Story)
 
 While setting up Terraform to provision Azure resources with below bash script, I faced an interesting challenge with **jq** installation on WSL.  
 This repo documents the **problem, troubleshooting steps, and the working solution**.
 
-Script with jq (JSON parser) - which caused the issue***
+## 📜 Script with jq (JSON parser) - which caused the issue***
 #!/bin/bash
 
-# ==============================
-# CONFIGURATION - EDIT THESE
-# ==============================
+
 SUBSCRIPTION_ID="<YOUR_SUBSCRIPTION_ID>"
 RESOURCE_GROUP="rg-demo"         # must match your TF config
 LOCATION="eastus"                # cheapest for free tier usually
 SP_NAME="terraform-sp"
 
-# ==============================
-# 1. Login to Azure
-# ==============================
 echo "Logging into Azure..."
 az login --only-show-errors
 
-# Set the subscription
 az account set --subscription "$SUBSCRIPTION_ID"
 
-# ==============================
-# 2. Create Resource Group
-# ==============================
 echo "Creating resource group: $RESOURCE_GROUP in $LOCATION..."
 az group create \
   --name "$RESOURCE_GROUP" \
   --location "$LOCATION"
 
-# ==============================
-# 3. Create Service Principal
-# ==============================
 echo "Creating service principal: $SP_NAME..."
 SP_OUTPUT=$(az ad sp create-for-rbac \
   --name "$SP_NAME" \
@@ -42,9 +39,6 @@ SP_OUTPUT=$(az ad sp create-for-rbac \
   --scopes "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/$RESOURCE_GROUP" \
   --sdk-auth)
 
-# ==============================
-# 4. Assign Key Vault Role for Secrets
-# ==============================
 echo "Assigning Key Vault Secrets Officer role..."
 SP_APP_ID=$(echo $SP_OUTPUT | jq -r '.clientId')
 az role assignment create \
@@ -52,9 +46,6 @@ az role assignment create \
   --role "Key Vault Secrets Officer" \
   --scope "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/$RESOURCE_GROUP"
 
-# ==============================
-# 5. Output credentials to a file
-# ==============================
 echo "Saving Service Principal credentials to azure-sp.json..."
 echo $SP_OUTPUT > azure-sp.json
 
@@ -89,7 +80,7 @@ unrecognized arguments:
 
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-🔍 The Investigation
+**## 🔍 The Investigation**
 
 Tried sudo apt install jq → Blocked due to sudo restrictions in WSL.
 
@@ -100,7 +91,7 @@ Realized I could remove jq entirely and still extract required values directly f
 
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-✅ The Solution
+**## ✅ The Solution**
 
 Rewrote the script without jq.
 
@@ -116,11 +107,12 @@ Assigns Key Vault role
 
 Outputs credentials into azure-sp.json
 
-Working script: setup-terraform-sp.sh
+Working script: setup-terraform-sp.sh ---->> check the entire code on the "setup-terraform-sp.sh" file under this repo 🧑‍💻
+
 
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-🛠️ Usage
+**## 🛠️ Usage**
 # Login to Azure
 az login
 
